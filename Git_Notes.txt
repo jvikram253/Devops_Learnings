@@ -1,0 +1,180 @@
+Local Repo - Working directory on workstation ( working tree)
+Remore Repo -
+Branch -
+Master -
+Stage/Index - Temporary buffer or caching for GIT on Local.
+Tag -
+Merge - To add/combine one branch into another branch 
+Clone - To get the remote repository to local repository.
+Pull - To get the updates from remote to local repository.
+Push - To upload the changes from local to remote repository.
+Stash - To save current working directory
+.git - Git configuration folder(cfg , ref, obj, hooks, etc..)
+
+Git Process ;
+
+					git add ops						git commit  ops
+Working directory ----------------> Stanging area --------------> Git repository
+
+Installation : 
+
+https://git-scm.com/ --> download for windows machine for client workstation.
+
+Downloaded on F:\Devops_Kelly
+
+Git we can use in 3 ways to interact from client machine:
+windows cmd
+linux shell - bash
+GUI
+
+To check git version :
+git --version
+
+If it is LINUX OS : 
+yum install -y git.
+
+GIT Help:
+
+usage: git [--version] [--exec-path[=GIT_EXEC_PATH]] [--html-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects]
+           [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]
+           [--help] COMMAND [ARGS]
+
+The most commonly used git commands are:
+   add        Add file contents to the index
+   bisect     Find by binary search the change that introduced a bug
+   branch     List, create, or delete branches
+   checkout   Checkout a branch or paths to the working tree
+   clone      Clone a repository into a new directory
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   fetch      Download objects and refs from another repository
+   grep       Print lines matching a pattern
+   init       Create an empty git repository or reinitialize an existing one
+   log        Show commit logs
+   merge      Join two or more development histories together
+   mv         Move or rename a file, a directory, or a symlink
+   pull       Fetch from and merge with another repository or a local branch
+   push       Update remote refs along with associated objects
+   rebase     Forward-port local commits to the updated upstream head
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+   show       Show various types of objects
+   status     Show the working tree status
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+See 'git help COMMAND' for more information on a specific command.
+
+
+Step1 : Create repo.
+
+#create repo directory
+mkdir GitDemo
+cd GitDemo
+
+#make it as repo. (run below command on that directory)
+#it will intialize the git repo with Master Branch.
+git init
+
+Step 2 : setup Git User and its email using git config
+git config  --global user.name "gituser"
+git config  --global user.email "gituser@test.com"
+
+Step 3 : change file on git directory
+
+Step 4 : add the file to staging area 
+
+git add <filename>  or git add . (to add all files on working directory)
+
+Step 5 : commit 
+
+git commit -m "description of commit"
+
+
+revert changes:
+
+--->To revert the changes on file which is on current working directory:
+git checkout <filename>
+
+--->To revert the changes on file which is on git staging area:
+git reset HEAD <filename>  --> bring it to working directory from staging area
+
+git checkout <filename> --> revert the changes on working download
+
+--->To revrt the changes on file which is commited.
+git reset --hard HEAD
+
+
+--->to set git configuration or repo configuration , need to edit config file
+
+cat .git/config
+
+----> to Name the repository or update the metadata of repository, need to edit description file.
+
+cat .git/description
+
+----> HEAD/refs will have latest commit ID.
+cat .git/HEAD
+
+----> hooks - to automate the git flow , we can place the scripts in hooks folder.
+
+.git/hooks/
+
+ ~/GitDemo/.git/hooks (GIT_DIR!)
+$ ll
+total 36
+-rwxr-xr-x 1 Vikram 197121  478 Jan 21 07:50 applypatch-msg.sample*
+-rwxr-xr-x 1 Vikram 197121  896 Jan 21 07:50 commit-msg.sample*
+-rwxr-xr-x 1 Vikram 197121 3327 Jan 21 07:50 fsmonitor-watchman.sample*
+-rwxr-xr-x 1 Vikram 197121  189 Jan 21 07:50 post-update.sample*
+-rwxr-xr-x 1 Vikram 197121  424 Jan 21 07:50 pre-applypatch.sample*
+-rwxr-xr-x 1 Vikram 197121 1638 Jan 21 07:50 pre-commit.sample*
+-rwxr-xr-x 1 Vikram 197121 1492 Jan 21 07:50 prepare-commit-msg.sample*
+-rwxr-xr-x 1 Vikram 197121 1348 Jan 21 07:50 pre-push.sample*
+-rwxr-xr-x 1 Vikram 197121 4898 Jan 21 07:50 pre-rebase.sample*
+-rwxr-xr-x 1 Vikram 197121  544 Jan 21 07:50 pre-receive.sample*
+-rwxr-xr-x 1 Vikram 197121 3610 Jan 21 07:50 update.sample*
+
+
+---> index - Staging data which is encrypted.
+
+---> info dir -- will have excluded file and the list of exclude from git can be updated on info/exclude file.
+# git ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with '#' are comments.
+# For a project mostly in C, the following would be a good set of
+# exclude patterns (uncomment them if you want to use them):
+# *.[oa]
+# *~
+
+
+---> objects (every change , it will have 2 digit directory 
+~/GitDemo/.git/objects (GIT_DIR!)
+$ ll
+total 0
+drwxr-xr-x 1 Vikram 197121 0 Jan 22 07:32 83/
+drwxr-xr-x 1 Vikram 197121 0 Jan 22 07:39 92/
+drwxr-xr-x 1 Vikram 197121 0 Jan 22 07:39 9f/
+drwxr-xr-x 1 Vikram 197121 0 Jan 22 07:36 a0/
+drwxr-xr-x 1 Vikram 197121 0 Jan 22 07:36 b3/
+drwxr-xr-x 1 Vikram 197121 0 Jan 22 07:38 d7/
+drwxr-xr-x 1 Vikram 197121 0 Jan 21 07:50 info/
+drwxr-xr-x 1 Vikram 197121 0 Jan 21 07:50 pack/
+
+
+---> logs directory - will store all the commit information (which is retrived on executing 'git log' command)
+~/GitDemo/.git/logs (GIT_DIR!)
+$ ll
+total 1
+-rw-r--r-- 1 Vikram 197121 459 Jan 22 07:39 HEAD
+drwxr-xr-x 1 Vikram 197121   0 Jan 22 07:36 refs/
+
+cat  ~/GitDemo/.git/logs/refs/heads/master
+0000000000000000000000000000000000000000 b3def1a1d61c45deddeef38779dcf51875a7f365 gituser <gituser@test.com> 1548122797 +0530    commit (initial): first file on git
+b3def1a1d61c45deddeef38779dcf51875a7f365 92a938d6292aa2a3e883605dedf0d3611dc68b1b gituser <gituser@test.com> 1548122955 +0530    commit: 2nd line added
+
+
+cat ~/GitDemo/.git/refs/heads/master
+92a938d6292aa2a3e883605dedf0d3611dc68b1b
+
+
+
